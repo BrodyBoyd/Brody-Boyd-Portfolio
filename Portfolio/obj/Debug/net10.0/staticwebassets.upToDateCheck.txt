@@ -1,0 +1,13 @@
+wwwroot\css\output.css
+wwwroot\css\site.css
+wwwroot\images\binged.png
+wwwroot\images\blackjack.png
+wwwroot\images\CSharpLogo.png
+wwwroot\images\CSSLogo.png
+wwwroot\images\HTMLLogo.png
+wwwroot\images\issueTracker.png
+wwwroot\images\JSLogo.png
+wwwroot\images\parlayHelper.png
+wwwroot\images\peepal.png
+C:\Users\bjb62\OneDrive\Desktop\Brody-Boyd-Portfolio\Portfolio\wwwroot\css\output.css
+C:\Users\bjb62\OneDrive\Desktop\Brody-Boyd-Portfolio\Portfolio\wwwroot\css\site.css
