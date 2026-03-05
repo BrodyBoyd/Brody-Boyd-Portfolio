@@ -1,0 +1,209 @@
+﻿<body class="bg-gray-950 text-white font-sans">
+
+    <!-- NAVBAR -->
+    <nav class="w-full py-5 px-8 flex justify-between items-center bg-gray-900/60 backdrop-blur-md fixed top-0 z-50">
+        <h1 class="text-2xl font-bold text-purple-400">Brody.dev</h1>
+        <div class="space-x-6 hidden md:flex">
+            <a href="#projects" class="hover:text-purple-300 transition">Projects</a>
+            <a href="#skills" class="hover:text-purple-300 transition">Skills</a>
+            <a href="#about" class="hover:text-purple-300 transition">About</a>
+            <a href="#contact" class="hover:text-purple-300 transition">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero-noise min-h-screen flex items-center justify-center text-center px-6 fade-in relative overflow-hidden
+    bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.35),rgba(0,0,0,0.6))]
+    before:content-[''] before:absolute before:inset-0
+    before:bg-[radial-gradient(circle_at_30%_40%,rgba(139,92,246,0.45),transparent_60%)]
+    after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-40">
+
+        <div class="relative z-10">
+            <h2 class="text-5xl md:text-6xl font-extrabold mb-4">
+                Hi, I'm <span class="text-purple-400">Brody</span>
+            </h2>
+            <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto">
+                A passionate <span class="text-purple-300">App & Web Developer</span> crafting clean, modern, and user‑focused digital experiences.
+            </p>
+
+            <div class="mt-8 flex justify-center gap-4">
+                <a href="#projects" class="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold transition">
+                    View My Work
+                </a>
+                <a href="#contact" class="px-6 py-3 border border-purple-400 hover:bg-purple-400/20 rounded-lg font-semibold transition">
+                    Contact Me
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-20 px-8 bg-gray-900 fade-in">
+        <h3 class="text-4xl font-bold text-center mb-12">Featured Projects</h3>
+
+        <div class="grid md:grid-cols-3 gap-10">
+            <!-- Project Card -->
+            <div class="bg-gray-800 p-6 rounded-xl card-hover hover:shadow-[0_10px_20px_-10px_black] hover:scale-105 transition-transform">
+                <div class="h-60 bg-gray-700 rounded-lg mb-4 peePal-background"></div>
+                <h4 class="text-xl font-semibold mb-2">PeePal</h4>
+                <div class="flex items-center gap-3">
+                    <img src="~/images/CSharpLogo.png" alt="C#" class="w-12">
+                    <img src="~/images/CSSLogo.png" alt="CSS Logo" class="w-8">
+                </div>
+                <p class="text-gray-300 text-sm">
+                    A full‑stack restroom‑rating platform featuring real‑time geolocation, category‑based reviews, and a clean, playful interface built for quick, trustworthy bathroom discovery.   (Still In development)
+                </p>
+                <a href="https://github.com/BrodyBoyd/AWD1115BoydCoursework/tree/main/FinalProject" target="_blank">Check out the github repository here!</a>
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-xl card-hover hover:shadow-[0_10px_20px_-10px_black] hover:scale-105 transition-transform">
+                <div class="h-40 bg-gray-700 rounded-lg mb-4"></div>
+                <h4 class="text-xl font-semibold mb-2">Used Car Finder</h4>
+                <p class="text-gray-300 text-sm">
+                    A responsive used‑car search tool with dynamic filters, smooth UI animations, and a modern Tailwind‑driven layout designed for fast, intuitive browsing.  A class project using Git and working with others to make a comprehensive website.  (Still in development)
+                </p>
+                <a href="https://github.com/EvanGudmestad/UsedAndReliableCars" target="_blank">Check out the github repository here!</a>
+            </div>
+
+            
+            <div class="bg-gray-800 p-6 rounded-xl card-hover transition hover:shadow-[0_10px_20px_-10px_black] hover:scale-105 transition-transform">
+                <a asp-controller="Blackjack" asp-action="Index">
+                    <div class="h-60 bg-gray-700 rounded-lg mb-4 blackjack-background"></div>
+                    <h4 class="text-xl font-semibold mb-2">BlackJack </h4>
+                    <div class="flex items-center gap-3">
+                        <img src="~/images/CSharpLogo.png" alt="C#" class="w-12">
+                        <img src="~/images/CSSLogo.png" alt="CSS Logo" class="w-8">
+                    </div>
+                </a>
+
+                <p class="text-gray-300 text-sm">
+                    A fully interactive Blackjack game built with C#, CSS, and Tailwind — complete with card logic, betting flow, and a polished casino‑style interface.
+                </p>
+                The code for this is imbeded within this site!
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-xl card-hover hover:shadow-[0_10px_20px_-10px_black] hover:scale-105 transition-transform">
+                <a href="https://issuetracker-service-627308096057.us-central1.run.app" target="_blank">
+                    <div class="h-60 bg-gray-700 rounded-lg mb-4 issueTracker-background"></div>
+                    <h4 class="text-xl font-semibold mb-2">Issue Tracker</h4>
+                    <div class="flex items-center gap-3">
+                        <img src="~/images/JSLogo.png" alt="JS logo" class="w-12">
+                        <img src="~/images/CSSLogo.png" alt="CSS Logo" class="w-8">
+                    </div>
+                </a>
+                <p class="text-gray-300 text-sm">
+                    A lightweight issue‑tracking system for logging, organizing, and resolving bugs, featuring a clean JavaScript‑powered UI and simple workflow management.
+                </p>
+                <a href="https://github.com/RankenTechnicalCollege/all-coursework-BrodyBoyd/tree/master/FinalProject" target="_blank">Check out the github repository here! </a>
+            </div>
+
+            
+             <div class="bg-gray-800 p-6 rounded-xl card-hover hover:shadow-[0_10px_20px_-10px_black] hover:scale-105 transition-transform">
+                <a href="https://binged-101902204590.us-central1.run.app" target="_blank">
+                    <div class="h-60 bg-gray-700 rounded-lg mb-4 binged-background"></div>
+                    <h4 class="text-xl font-semibold mb-2">Binged</h4>
+                    <div class="flex items-center gap-3">
+                        <img src="~/images/JSLogo.png" alt="JS logo" class="w-12">
+                        <img src="~/images/CSSLogo.png" alt="CSS Logo" class="w-8">
+                    </div>
+                </a>
+                <p class="text-gray-300 text-sm">
+                    A media‑tracking app that lets users log shows, track progress, and manage watchlists through a fast, JavaScript‑driven interface.
+                </p>
+                <a href="https://github.com/BrodyBoyd/Binged" target="_blank">Check out the github repository here!</a>
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-xl card-hover hover:shadow-[0_10px_20px_-10px_black] hover:scale-105 transition-transform">
+                <a href="https://parlayhelperfixed.onrender.com" target="_blank">
+                    <div class="h-60 bg-gray-700 rounded-lg mb-4 parlayHelper-background"></div>
+                    <h4 class="text-xl font-semibold mb-2">Parlay Helper</h4>
+                    <div class="flex items-center gap-3">
+                        <img src="~/images/JSLogo.png" alt="JS logo" class="w-12">
+                        <img src="~/images/CSSLogo.png" alt="CSS Logo" class="w-8">
+                    </div>
+                </a>
+                <p class="text-gray-300 text-sm">
+                    A sports‑betting assistant that pulls live NFL player data from ESPN’s API and calculates projected outcomes to help users evaluate over/under betting lines.
+                </p>
+                <a href="https://github.com/BrodyBoyd/ParlayHelperLive" target="_blank">Check out the github repository here!</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-20 px-8 fade-in">
+        <h3 class="text-4xl font-bold text-center mb-12">Skills</h3>
+
+        <div class="grid md:grid-cols-4 gap-8 text-center">
+            <div class="bg-gray-800 p-6 rounded-xl card-hover transition">
+                <h4 class="text-xl font-semibold mb-2">Frontend</h4>
+                <p class="text-gray-300 text-sm">Tailwind, CSS, HTML, React, Fetch/Axios, JSON handling</p>
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-xl card-hover transition">
+                <h4 class="text-xl font-semibold mb-2">Backend</h4>
+                <p class="text-gray-300 text-sm">ASP.NET MVC, APIs, C#, Vite, Javascript, TypeScript</p>
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-xl card-hover transition">
+                <h4 class="text-xl font-semibold mb-2">Tools</h4>
+                <p class="text-gray-300 text-sm">Git, SQL, NPM, GCloud, MongoDb, full MERN stack</p>
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-xl card-hover transition">
+                <h4 class="text-xl font-semibold mb-2">Soft Skills</h4>
+                <p class="text-gray-300 text-sm">Problem‑solving, design thinking</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-20 px-8 bg-gray-900 fade-in">
+        <h3 class="text-4xl font-bold text-center mb-12">About Me</h3>
+
+        <div class="max-w-3xl mx-auto text-center text-gray-300 text-lg">
+            <p>
+                I am a full stack developer who loves more than anything to see a full project come together.  I focus on making a clean and well designed front end while also
+                making an efficient and thoughtful backend.  I want any app I create to feel thoughtfully made and polished.
+            </p>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-24 px-8 fade-in text-center">
+        <h3 class="text-4xl font-bold my-6">Where to Reach Me</h3>
+        <p class="text-gray-300 max-w-2xl mx-auto mb-12">
+            Whether you want to collaborate, hire me, or just say hello — here are the best ways to get in touch.
+        </p>
+
+        <div class="max-w-3xl mx-auto grid md:grid-cols-3 gap-8">
+
+            <!-- Email -->
+            <div class="p-6 bg-gray-800/60 border border-gray-700 rounded-xl hover:border-purple-400 transition">
+                <h4 class="text-xl font-semibold mb-2 text-purple-300">Email</h4>
+                <p class="text-gray-300">bjb6287@gmail.com</p>
+            </div>
+
+            <!-- LinkedIn -->
+            <div class="p-6 bg-gray-800/60 border border-gray-700 rounded-xl hover:border-purple-400 transition">
+                <h4 class="text-xl font-semibold mb-2 text-purple-300">LinkedIn</h4>
+                <a href="https://www.linkedin.com/in/brody-boyd-757778220/" class="text-purple-400 hover:underline" target="_blank">LinkedIn Account</a>
+            </div>
+
+            <!-- GitHub -->
+            <div class="p-6 bg-gray-800/60 border border-gray-700 rounded-xl hover:border-purple-400 transition">
+                <h4 class="text-xl font-semibold mb-2 text-purple-300">GitHub</h4>
+                <a href="https://github.com/BrodyBoyd" class="text-purple-400 hover:underline" target="_blank">GitHub Account</a>
+            </div>
+
+        </div>
+        <br/>
+
+        <div class="mt-16 p-2 mb-4">
+            <a href="mailto:bjb6287@gmail.com"
+               class="inline-block px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold transition">
+                Send Me an Email
+            </a>
+        </div>
+    </section>
+
+</body>

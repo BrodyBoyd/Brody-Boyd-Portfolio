@@ -1,0 +1,309 @@
+﻿@model BlackjackPlayer;
+
+<div class="min-h-screen bg-gradient-to-b from-green-900 to-green-700 flex flex-col items-center py-8">
+    <!-- Table header / title -->
+    <div class="w-full max-w-5xl flex justify-between items-center mb-6 px-4">
+        <h1 class="text-3xl font-bold text-yellow-300 tracking-wide">Blackjack Table</h1>
+        <a asp-controller="Home" asp-action="Index" class="text-3xl font-bold text-purple-300 tracking-wide"><- Go Back</a>
+        <div class="flex items-center space-x-4">
+            <div class="text-right">
+                <p class="text-sm text-gray-200">Balance</p>
+                @{
+                    var balance = Model.Balance;
+                }
+                <p id="playerBalance" class="text-xl font-semibold text-white">@balance</p>
+            </div>
+            <form asp-action="ResetBalance" method="post">
+                <button id="resetGameBtn" type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm">
+                    Reset
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Main table area -->
+    <div class="w-full max-w-5xl bg-green-800 rounded-3xl shadow-2xl border-4 border-yellow-500 px-6 py-6 flex flex-col space-y-6">
+
+        <!-- Dealer area -->
+        <div class="flex flex-col items-center">
+            <div class="flex items-center justify-between w-full mb-2">
+                <span class="text-lg font-semibold text-gray-100">Dealer</span>
+                <span class="text-sm text-gray-200">
+                    Dealer Total:
+                    @if (Model.ShowDealerCards || Model.Bust == true)
+                    {
+                        <span id="dealerTotal" class="font-bold">@Model.DealerTotal</span>
+                    }
+                    else
+                    {
+                        <span id="dealerTotal" class="font-bold">?</span>
+                    }
+                </span>
+            </div>
+
+            <div id="dealerCards" class="flex space-x-2 justify-center">
+                <!-- Dealer Cards -->
+                @if (Model?.DealerCards != null && Model.DealerCards.Count > 0)
+                {
+                    if (Model.ShowDealerCards || Model.Bust == true)
+                    {
+                        @foreach (var card in Model.DealerCards)
+                        {
+                            <div class="card">
+                                @card["Rank"] @card["Suit"]
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="card">
+                            @Model?.DealerCards[0]["Rank"] @Model?.DealerCards[0]["Suit"]
+                        </div>
+                        <div class="card-back card">🂠</div>
+                    }
+
+                }
+
+
+            </div>
+        </div>
+
+        <hr class="border-t border-yellow-500/40" />
+
+        <!-- Player area -->
+        <div class="flex flex-col items-center">
+            <div class="flex items-center justify-between w-full mb-2">
+                <span class="text-lg font-semibold text-gray-100">Player</span>
+                @* <span class="text-sm text-gray-200">
+                    Your Total:
+                    <span id="playerTotal" class="font-bold">Hand total ehre</span>
+                </span> *@
+            </div>
+
+            <div id="playerCards"
+                 class="@("flex w-full mt-4 " + (Model.PlayerHands.Count > 1 ? "justify-evenly" : "justify-center"))">
+
+                @for (int i = 0; i < Model.PlayerHands.Count; i++)
+                {
+                    var hand = Model.PlayerHands[i];
+
+                    <div class="flex flex-col items-center px-4">
+
+                        <span class="text-gray-200 font-semibold mb-2">
+                            Hand @(i + 1)
+                            @(i == Model.ActiveHandIndex ? "(Active)" : "")
+                            @if (Model.AllHandsStand || Model.Bust == true)
+                            {
+                                <p>Result: @Model.EvaluateHand(Model.PlayerHands[i])</p>
+                            }
+
+
+                        </span>
+
+                        <div class="flex gap-2 @(i == Model.ActiveHandIndex ? "active-hand" : "")">
+                            @foreach (var card in hand)
+                            {
+                                <div class="card">
+                                    @card["Rank"] @card["Suit"]
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+        </div>
+
+        <!-- Status / messages -->
+        @if (Model.Bet <= 0)
+        {
+            <div class="flex justify-center">
+                <div id="gameStatus"
+                     class="px-4 py-2 rounded-full bg-black/40 text-yellow-200 text-sm font-semibold text-center min-w-[200px]">
+                    Place your bet to start
+                </div>
+            </div>
+        }
+        else if (Model.Bust)
+        {
+            <div class="flex justify-center">
+                <div id="gameStatus"
+                     class="px-4 py-2 rounded-full bg-black/40 text-red-500 text-xl font-bold text-center min-w-[200px]">
+                    BUST! You went over 21!
+                </div>
+            </div>
+        }
+
+
+        <!-- Betting area -->
+        @if (Model?.PlayerHands?.Count == 0 || Model.Bust == true || Model.AllHandsStand == true)
+        {
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+                <div class="flex items-center space-x-3">
+                    <span class="text-sm text-gray-100">Current Bet:</span>
+                    <form asp-action="Deal" method="post">
+                        <input id="betAmount"
+                               type="number"
+                               min="1"
+                               max="@Model.Balance"
+                               class="w-24 px-2 py-1 rounded-md border border-gray-400 text-right bg-gray-200"
+                               asp-for="Bet"
+                               placeholder="$0" />
+
+                        <button type="submit"
+                                class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md">
+                            Place Bet and start!
+                        </button>
+
+                    </form>
+                </div>
+
+
+                <div class="flex items-center space-x-3">
+                    <!-- Example chips (you can hook click events to set bet) -->
+                    <button class="chip bg-red-600" data-chip="10">$10</button>
+                    <button class="chip bg-blue-600" data-chip="25">$25</button>
+                    <button class="chip bg-yellow-500 text-black" data-chip="50">$50</button>
+                    <button class="chip bg-purple-600" data-chip="100">$100</button>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+                <div class="flex items-center space-x-3">
+                    <span class="text-sm text-gray-100">Current Bet:</span>
+                    <input id="betAmount"
+                           type="text"
+                           min="0"
+                           class="w-24 px-2 py-1 rounded-md border border-gray-400 text-right text-white bg-gray-600"
+                           asp-for="Bet"
+                           placeholder="@Model.Bet"
+                           disabled />
+                </div>
+            </div>
+        }
+
+
+        <!-- Controls -->
+        @if (Model?.PlayerHands?.Count > 0 && Model.AllHandsStand == false && Model.Bust == false)
+        {
+            <div class="flex flex-wrap justify-center gap-4 pt-4 border-t border-yellow-500/40 mt-2">
+                <form asp-action="Hit" method="post">
+                    <button id="hitBtn"
+                            class="px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-md disabled:opacity-40">
+                        Hit
+                    </button>
+                    <input type="hidden" asp-for="PlayerHandsJson" />
+                    <input type="hidden" asp-for="DealerCardsJson" />
+                    <input type="hidden" asp-for="DeckJson" />
+                    <input type="hidden" asp-for="PlayerTotal" />
+                    <input type="hidden" asp-for="DealerTotal" />
+                    <input type="hidden" asp-for="Balance" />
+                    <input type="hidden" asp-for="Bet" />
+                    <input type="hidden" asp-for="ActiveHandIndex" />
+                </form>
+                <form asp-action="Stand" method="post">
+                    <button id="standBtn"
+                            class="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-md disabled:opacity-40">
+                        Stand
+                    </button>
+                    <input type="hidden" asp-for="PlayerHandsJson" />
+                    <input type="hidden" asp-for="DealerCardsJson" />
+                    <input type="hidden" asp-for="DeckJson" />
+                    <input type="hidden" asp-for="PlayerTotal" />
+                    <input type="hidden" asp-for="DealerTotal" />
+                    <input type="hidden" asp-for="Balance" />
+                    <input type="hidden" asp-for="Bet" />
+                    <input type="hidden" asp-for="ActiveHandIndex" />
+                </form>
+                <form asp-action="Double" method="post">
+                    <button id="doubleBtn"
+                            class="px-6 py-2 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-md disabled:opacity-40">
+                        Double
+                    </button>
+                </form>
+
+                @if (Model.CanSplit)
+                {
+                    <form asp-action="Split" method="post">
+                        <button id="splitBtn"
+                                class="px-6 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md disabled:opacity-40">
+                            Split
+                        </button>
+                        <input type="hidden" asp-for="PlayerHandsJson" />
+                        <input type="hidden" asp-for="DealerCardsJson" />
+                        <input type="hidden" asp-for="DeckJson" />
+                        <input type="hidden" asp-for="PlayerTotal" />
+                        <input type="hidden" asp-for="DealerTotal" />
+                        <input type="hidden" asp-for="Balance" />
+                        <input type="hidden" asp-for="Bet" />
+                        <input type="hidden" asp-for="ActiveHandIndex" />
+                    </form>
+                }
+                else
+                {
+                    <button id="splitBtn"
+                            class="px-6 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md disabled:opacity-40"
+                            disabled>
+                        Split
+                    </button>
+                }
+
+
+            </div>
+        }
+        else if (Model.AllHandsStand || Model.Bust == true)
+        {
+            <div class="flex flex-wrap justify-center gap-4 pt-4 border-t border-yellow-500/40 mt-2">
+                <button id="hitBtn"
+                        class="px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-md disabled:opacity-40"
+                        disabled>
+                    Hit
+                </button>
+                <button id="standBtn"
+                        class="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-md disabled:opacity-40"
+                        disabled>
+                    Stand
+                </button>
+                <button id="doubleBtn"
+                        class="px-6 py-2 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-md disabled:opacity-40"
+                        disabled>
+                    Double
+                </button>
+                <button id="splitBtn"
+                        class="px-6 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md disabled:opacity-40"
+                        disabled>
+                    Split
+                </button>
+            </div>
+        }
+        else
+        {
+            <div class="flex flex-wrap justify-center gap-4 pt-4 border-t border-yellow-500/40 mt-2">
+                <button id="hitBtn"
+                        class="px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-md disabled:opacity-40"
+                        disabled>
+                    Hit
+                </button>
+                <button id="standBtn"
+                        class="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-md disabled:opacity-40"
+                        disabled>
+                    Stand
+                </button>
+                <button id="doubleBtn"
+                        class="px-6 py-2 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-md disabled:opacity-40"
+                        disabled>
+                    Double
+                </button>
+                <button id="splitBtn"
+                        class="px-6 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md disabled:opacity-40"
+                        disabled>
+                    Split
+                </button>
+            </div>
+        }
+    </div>
+</div>
